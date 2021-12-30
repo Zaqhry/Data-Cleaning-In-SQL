@@ -119,10 +119,11 @@ FROM Portfolio..NashvilleHousing
 	ORDER BY 2
 
 SELECT SoldAsVacant, 
-(CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
-	   When SoldAsVacant = 'N' THEN 'No'
-	   ELSE SoldAsVacant
-	   END)
+(CASE
+    WHEN SoldAsVacant = 'Y' THEN 'Yes'
+    WHEN SoldAsVacant = 'N' THEN 'No'
+    ELSE SoldAsVacant
+ END)
 FROM Portfolio..NashvilleHousing
 
 UPDATE Portfolio..NashvilleHousing
