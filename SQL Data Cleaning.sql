@@ -28,22 +28,22 @@ SET SaleDateConverted = CONVERT(DATE,SaleDate)
 
 SELECT *
 FROM PortfolioProject.dbo.NashvilleHousing
---Where PropertyAddress is null
-ORDER BY ParcelID
+	--WHERE PropertyAddress IS NULL
+	ORDER BY ParcelID
 
 SELECT a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, ISNULL(a.PropertyAddress,b.PropertyAddress)
 FROM PortfolioProject.dbo.NashvilleHousing a
-JOIN PortfolioProject.dbo.NashvilleHousing b
-	ON a.ParcelID = b.ParcelID
-	AND a.[UniqueID ] <> b.[UniqueID ]
+	JOIN PortfolioProject.dbo.NashvilleHousing b
+		ON a.ParcelID = b.ParcelID
+		AND a.UniqueID <> b.UniqueID
 WHERE a.PropertyAddress IS NULL
 
 UPDATE a
 SET PropertyAddress = ISNULL(a.PropertyAddress,b.PropertyAddress)
 FROM PortfolioProject.dbo.NashvilleHousing a
-JOIN PortfolioProject.dbo.NashvilleHousing b
-	ON a.ParcelID = b.ParcelID
-	AND a.[UniqueID ] <> b.[UniqueID ]
+	JOIN PortfolioProject.dbo.NashvilleHousing b
+		ON a.ParcelID = b.ParcelID
+		AND a.UniqueID <> b.UniqueID
 WHERE a.PropertyAddress IS NULL
 
 --------------------------------------------------------------------------------------------------------------------------
@@ -52,12 +52,11 @@ WHERE a.PropertyAddress IS NULL
 
 SELECT PropertyAddress
 FROM PortfolioProject.dbo.NashvilleHousing
---Where PropertyAddress is null
---order by ParcelID
+	--WHERE PropertyAddress IS NULL
+	--ORDER BY ParcelID
 
-SELECT
-SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 ) Address
-, SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress)) Address
+SELECT	SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 ) Address, 
+	SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress)) Address
 FROM PortfolioProject.dbo.NashvilleHousing
 
 ALTER TABLE NashvilleHousing
@@ -78,10 +77,9 @@ From PortfolioProject.dbo.NashvilleHousing
 SELECT OwnerAddress
 FROM PortfolioProject.dbo.NashvilleHousing
 
-SELECT
-PARSENAME(REPLACE(OwnerAddress, ',', '.') , 3)
-,PARSENAME(REPLACE(OwnerAddress, ',', '.') , 2)
-,PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
+SELECT	PARSENAME(REPLACE(OwnerAddress, ',', '.') , 3),
+	PARSENAME(REPLACE(OwnerAddress, ',', '.') , 2),
+	PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
 FROM PortfolioProject.dbo.NashvilleHousing
 
 ALTER TABLE NashvilleHousing
@@ -111,8 +109,8 @@ FROM PortfolioProject.dbo.NashvilleHousing
 
 SELECT DISTINCT(SoldAsVacant), COUNT(SoldAsVacant)
 FROM PortfolioProject.dbo.NashvilleHousing
-GROUP BY SoldAsVacant
-ORDER BY 2
+	GROUP BY SoldAsVacant
+	ORDER BY 2
 
 
 SELECT SoldAsVacant, 
@@ -146,12 +144,12 @@ SELECT *,
 					) row_num
 
 FROM PortfolioProject.dbo.NashvilleHousing
---order by ParcelID
+--ORDER BY ParcelID
 )
 SELECT *
 FROM RowNumCTE
 WHERE row_num > 1
-ORDER BY PropertyAddress
+	ORDER BY PropertyAddress
 
 SELECT *
 FROM PortfolioProject.dbo.NashvilleHousing
@@ -165,3 +163,5 @@ FROM PortfolioProject.dbo.NashvilleHousing
 
 ALTER TABLE PortfolioProject.dbo.NashvilleHousing
 DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress, SaleDate
+
+
