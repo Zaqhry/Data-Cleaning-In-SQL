@@ -118,14 +118,12 @@ FROM Portfolio..NashvilleHousing
 	GROUP BY SoldAsVacant
 	ORDER BY 2
 
-
 SELECT SoldAsVacant, 
 (CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
 	   When SoldAsVacant = 'N' THEN 'No'
 	   ELSE SoldAsVacant
 	   END)
 FROM Portfolio..NashvilleHousing
-
 
 UPDATE Portfolio..NashvilleHousing
 SET SoldAsVacant = (CASE When SoldAsVacant = 'Y' THEN 'Yes'
