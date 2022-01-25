@@ -8,6 +8,11 @@ FROM Portfolio..NashvilleHousing
 
 -- Standardize Date Format
 
+ALTER TABLE Portfolio..NashvilleHousing
+ALTER COLUMN SaleDate Date
+
+--Other ways 
+
 SELECT saleDateConverted, 
        CONVERT(DATE,SaleDate)
 FROM Portfolio..NashvilleHousing
@@ -55,10 +60,10 @@ WHERE a.PropertyAddress IS NULL
 
 -- Breaking out Address into Individual Columns (Address, City, State)
 
+--SUBSTRING & CHARINDEX WAY 
+
 SELECT PropertyAddress
 FROM Portfolio..NashvilleHousing
-	--WHERE PropertyAddress IS NULL
-	--ORDER BY ParcelID
 
 SELECT	SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 ) Address, 
 	SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress)) Address
@@ -76,8 +81,9 @@ ADD PropertySplitCity Nvarchar(255);
 UPDATE Portfolio..NashvilleHousing
 SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress))
 
-SELECT *
-FROM Portfolio..NashvilleHousing
+
+
+--PARSNAME & REPLACE WAY 
 
 SELECT OwnerAddress
 FROM Portfolio..NashvilleHousing
@@ -146,7 +152,6 @@ SELECT *,
 	LegalReference
 	ORDER BY UniqueID) row_num
 FROM Portfolio..NashvilleHousing
-	--ORDER BY ParcelID
 )
 
 SELECT *
